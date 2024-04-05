@@ -3,6 +3,7 @@
     <style name="Base.Theme.Calculator" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:statusBarColor" tools:targetAPI="l">@color/status_bar</item>
     </style>
 
     <style name="Theme.Calculator" parent="Base.Theme.Calculator" />
