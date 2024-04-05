@@ -3,7 +3,6 @@ package com.example.calculator;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -11,6 +10,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.button.MaterialButton;
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.Scriptable;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -78,12 +79,57 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 textSolution.setText(textResult.getText());
                 return;
             case "C":
-                dataCalculate = dataCalculate.substring(0, dataCalculate.length()-1);
+                if(dataCalculate.length() >1) {
+                    dataCalculate = dataCalculate.substring(0, dataCalculate.length() - 1);
+                    break;
+                }
+                else{
+                    return;
+                }
+            case "cos":
+                dataCalculate = String.valueOf(Math.cos(Double.parseDouble(dataCalculate)));
+                break;
+            case "sin":
+                dataCalculate = String.valueOf(Math.sin(Double.parseDouble(dataCalculate)));
+                break;
+            case "tan":
+                dataCalculate = String.valueOf(Math.tan(Double.parseDouble(dataCalculate)));
+                break;
+            case "^":
+                dataCalculate = dataCalculate + "^";
                 break;
             default:
                 dataCalculate = dataCalculate + buttonText;
         }
         textSolution.setText(dataCalculate);
-
+        String finalResult = getResult(dataCalculate);
+        if(!finalResult.equals("Error")){
+            textResult.setText(finalResult);
+        }
+    }
+    String getResult(String data){
+        try {
+            if (data.contains("^"))
+            {
+                String[] powerOperands = data.split("\\^");
+                if (powerOperands.length == 2) {
+                    double base = Double.parseDouble(powerOperands[0]);
+                    double exponent = Double.parseDouble(powerOperands[1]);
+                    double result = Math.pow(base, exponent);
+                    return String.valueOf(result);
+                }
+                else {
+                    return "Error";
+                }
+            }
+            Context context = Context.enter();
+            context.setOptimizationLevel(-1);
+            Scriptable scriptable = context.initSafeStandardObjects();
+            String finalResult = context.evaluateString(scriptable, data, "Javascript", 1, null).toString();
+            return finalResult;
+        }
+        catch (Exception e){
+            return "Error";
+        }
     }
 }
