@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         MaterialButton button = (MaterialButton) View;
         String buttonText = button.getText().toString();
         String dataCalculate = textSolution.getText().toString();
-
         switch (buttonText){
             case "AC":
                 textSolution.setText("");
@@ -86,15 +85,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 else{
                     return;
                 }
-            case "cos":
-                dataCalculate = String.valueOf(Math.cos(Double.parseDouble(dataCalculate)));
-                break;
             case "sin":
-                dataCalculate = String.valueOf(Math.sin(Double.parseDouble(dataCalculate)));
-                break;
             case "tan":
-                dataCalculate = String.valueOf(Math.tan(Double.parseDouble(dataCalculate)));
-                break;
+            case "cos":
+                if (dataCalculate.isEmpty()){
+                    return;
+                }
+                else {
+                    dataCalculate = String.valueOf(Math.sin(Double.parseDouble(dataCalculate)));
+                    break;
+                }
             case "^":
                 dataCalculate = dataCalculate + "^";
                 break;
