@@ -34,34 +34,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        assignId(buttonCos, R.id.button_cos);
-        assignId(buttonSin, R.id.button_sin);
-        assignId(buttonTan, R.id.button_tan);
-        assignId(buttonPower, R.id.button_power);
-        assignId(buttonC, R.id.button_c);
-        assignId(buttonBracketOpen, R.id.button_open);
-        assignId(buttonBracketClose, R.id.button_close);
-        assignId(buttonDivide, R.id.button_divide);
-        assignId(button7, R.id.button_7);
-        assignId(button8, R.id.button_8);
-        assignId(button9, R.id.button_9);
-        assignId(buttonMultiply, R.id.button_multiply);
-        assignId(button4, R.id.button_4);
-        assignId(button5, R.id.button_5);
-        assignId(button6, R.id.button_6);
-        assignId(buttonMinus, R.id.button_minus);
-        assignId(button1, R.id.button_1);
-        assignId(button2, R.id.button_2);
-        assignId(button3, R.id.button_3);
-        assignId(buttonPlus, R.id.button_plus);
-        assignId(buttonAC, R.id.button_AC);
-        assignId(buttonZero, R.id.button_zero);
-        assignId(buttonDot, R.id.button_dot);
-        assignId(buttonEqual, R.id.button_equal);
+        assignId(R.id.button_cos);
+        assignId(R.id.button_sin);
+        assignId(R.id.button_tan);
+        assignId(R.id.button_power);
+        assignId(R.id.button_c);
+        assignId(R.id.button_open);
+        assignId(R.id.button_close);
+        assignId(R.id.button_divide);
+        assignId(R.id.button_7);
+        assignId(R.id.button_8);
+        assignId(R.id.button_9);
+        assignId(R.id.button_multiply);
+        assignId(R.id.button_4);
+        assignId(R.id.button_5);
+        assignId(R.id.button_6);
+        assignId(R.id.button_minus);
+        assignId(R.id.button_1);
+        assignId(R.id.button_2);
+        assignId(R.id.button_3);
+        assignId(R.id.button_plus);
+        assignId(R.id.button_AC);
+        assignId(R.id.button_zero);
+        assignId(R.id.button_dot);
+        assignId(R.id.button_equal);
 
     }
-    void assignId (MaterialButton button, int id){
-        button = findViewById(id);
+    void assignId (int id){
+        MaterialButton button = findViewById(id);
         button.setOnClickListener(this);
     }
     @Override
@@ -126,6 +126,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             context.setOptimizationLevel(-1);
             Scriptable scriptable = context.initSafeStandardObjects();
             String finalResult = context.evaluateString(scriptable, data, "Javascript", 1, null).toString();
+            if (finalResult.equals("Infinity")) {
+                finalResult = "0";
+            }
             return finalResult;
         }
         catch (Exception e){
